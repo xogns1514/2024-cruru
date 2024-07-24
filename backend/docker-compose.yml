@@ -16,7 +16,7 @@
 #      - '--collation-server=utf8mb4_unicode_ci'
 #    networks:
 #      test_network:
-#        ipv4_address: 172.18.0.2
+#        ipv4_address: 172.18.0.2@@
 #
 #
 #  application:
