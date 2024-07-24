@@ -27,11 +27,14 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         
     - name: Image build and push
-      uses: docker/build-push-action@v6.5.0
-      with:
-        push: true
-        tags: cruru/action:latest
+      run: |
+        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t myapp:latest --platform linux/amd64 .
 
+    - name: Push Docker image
+      run: |
+        docker tag myapp:latest ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        
     - name: Extract secrets to .env file
       run: |
         echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
