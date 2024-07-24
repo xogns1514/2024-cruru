@@ -22,7 +22,7 @@
 #  application:
 #    container_name: app_container
 #    platform: linux/amd64
-#    depends_on:
+#    depends_on:@@
 #      - database-mysql
 #    restart: always
 #    image: cruruTest/cruru:latest
