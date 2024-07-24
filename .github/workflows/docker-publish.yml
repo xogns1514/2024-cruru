@@ -29,10 +29,15 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        cd backend
+        ls -al  # 현재 디렉토리 구조 확인
+        pwd  # 현재 경로 확인
+        if [ -d "./backend" ]; then cd backend; else echo "Backend directory not found"; exit 1; fi        
         docker-compose -f docker-compose.yml build
         docker-compose -f docker-compose.yml push
 
     - name: Deploy
       run: |
+        ls -al  # 현재 디렉토리 구조 확인
+        pwd  # 현재 경로 확인
+        if [ -d "./backend" ]; then cd backend; else echo "Backend directory not found"; exit 1; fi
         docker-compose -f docker-compose.yml up -d
