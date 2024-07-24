@@ -44,12 +44,13 @@
 #    ipam:
 #      config:
 #        - subnet: 172.18.0.0/16
-
-version: '3'
+version: '3.8'
 
 services:
   app:
-    container_name: tesy
-    image: alpine:latest
+    image: myapp:latest
+    env_file:
+      - .env
     environment:
-      - GITHUB_SECRET=${GITHUB_SECRET}
+      - SECRET_KEY
+
