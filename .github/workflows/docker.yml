@@ -25,6 +25,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Image build and push
+      uses: docker/build-push-action@v6.5.0
+      with:
+        push: true
+        tags: cruru/action:latest
 
     - name: Extract secrets to .env file
       run: |
@@ -44,3 +50,4 @@ jobs:
         # pwd  # 현재 경로 확인
         # if [ -d "./backend" ]; then cd backend; else echo "Backend directory not found"; exit 1; fi
         docker-compose -f docker-compose.yml up -d
+          
