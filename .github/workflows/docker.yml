@@ -24,7 +24,7 @@ jobs:
         java-version: '17'
 
     - name: Grant execute permission for gradlew
-      run: chmod +x backend/gradlew
+      run: chmod +x gradlew
 
     - name: Build with Gradle
       run: ./gradlew bootJar
@@ -40,22 +40,23 @@ jobs:
         
     - name: Image build and push
       run: |
-        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t myapp:latest --platform linux/amd64 .
+        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t cruruTest:latest --platform linux/amd64 .
 
     - name: Push Docker image
       run: |
-        docker tag myapp:latest ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        docker tag cruruTest:latest ${{ secrets.DOCKER_USERNAME }}/cruruTest:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
         
     - name: Extract secrets to .env file
       run: |
-        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+        echo DB_URL=${{ secrets.DB_URL }} >> .env
+        echo DB_USER=${{ secrets.DB_USER }} >> .env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> .env
+        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> .env
 
     - name: Build and push Docker image
       run: |
-        # ls -al  # 현재 디렉토리 구조 확인
-        # pwd  # 현재 경로 확인
-        # if [ -d "./backend" ]; then cd backend; else echo "Backend directory not found"; exit 1; fi        
         docker-compose -f docker-compose.yml build
         docker-compose -f docker-compose.yml push
 
