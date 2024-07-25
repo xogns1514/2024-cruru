@@ -74,13 +74,13 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: docker-compose
-        path: ${{ github.workspace }}/backend/docker-compose.yml
+        path: ${{ github.workspace }}/backend
 
     - name: Download .env file
       uses: actions/download-artifact@v4
       with:
         name: env-file
-        path: ${{ github.workspace }}/backend/.env
+        path: ${{ github.workspace }}/backend
 
     - name: Build and push Docker image
       run: |
