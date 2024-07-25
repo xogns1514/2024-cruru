@@ -60,13 +60,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Download build artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: cruru-be-develop-jar
-        path: ${{ github.workspace }}/backend/build/libs
-
-
     - name: Build and push Docker image
       run: |
         docker-compose --env-file .env -f docker-compose.yml build
