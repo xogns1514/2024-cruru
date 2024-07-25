@@ -81,11 +81,10 @@ jobs:
       with:
         name: env-file
         path: ${{ github.workspace }}/backend
-
-    - name: Build and push Docker image
+        
+    - name: Stop and remove existing containers
       run: |
-        docker-compose --env-file .env -f docker-compose.yml build
-        docker-compose --env-file .env -f docker-compose.yml push
+        docker-compose -f docker-compose.yml down 
 
     - name: Deploy
       run: |
