@@ -82,11 +82,6 @@ jobs:
         name: env-file
         path: ${{ github.workspace }}/backend
 
-    - name: Build and push Docker image
-      run: |
-        docker-compose --env-file .env -f docker-compose.yml build
-        docker-compose --env-file .env -f docker-compose.yml push
-
     - name: Deploy
       run: |
         docker-compose --env-file .env -f docker-compose.yml up -d
