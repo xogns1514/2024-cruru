@@ -29,9 +29,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew bootJar
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
@@ -40,11 +37,11 @@ jobs:
         
     - name: Image build and push
       run: |
-        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t cruruTest:latest --platform linux/amd64 .
+        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t crurutest:latest --platform linux/amd64 .
 
     - name: Push Docker image
       run: |
-        docker tag cruruTest:latest ${{ secrets.DOCKER_USERNAME }}/cruruTest:latest
+        docker tag crurutest:latest ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
         
     - name: Extract secrets to .env file
