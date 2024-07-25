@@ -29,7 +29,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_URL: jdbc:mysql://database-container:13306/cruru
+      DB_URL: jdbc:mysql://database-mysql:13306/cruru
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DDL_AUTO: ${DDL_AUTO}
