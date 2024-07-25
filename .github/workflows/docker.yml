@@ -42,7 +42,7 @@ jobs:
     - name: Push Docker image
       run: |
         docker tag crurutest:latest ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
         
     - name: Extract secrets to .env file
       run: |
@@ -59,8 +59,5 @@ jobs:
 
     - name: Deploy
       run: |
-        # ls -al  # 현재 디렉토리 구조 확인
-        # pwd  # 현재 경로 확인
-        # if [ -d "./backend" ]; then cd backend; else echo "Backend directory not found"; exit 1; fi
         docker-compose -f docker-compose.yml up -d
           
