@@ -25,7 +25,7 @@ services:
     depends_on:
       - database-mysql
     restart: always
-    image: cruruTest/cruru:latest
+    image: crurutest:latest
     ports:
       - "8081:8081"
     environment:
