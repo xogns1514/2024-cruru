@@ -60,7 +60,7 @@ jobs:
     - name: Upload docker-compose
       uses: actions/upload-artifact@v4
       with:
-        name: docker-compose-yml
+        name: docker-compose
         path: ${{ github.workspace }}/backend/docker-compose.yml
 
   deploy:
@@ -73,7 +73,7 @@ jobs:
     - name: Download docker-compose.yml
       uses: actions/download-artifact@v4
       with:
-        name: docker-compose.yml
+        name: docker-compose
         path: ${{ github.workspace }}/backend/docker-compose.yml
 
     - name: Download .env file
