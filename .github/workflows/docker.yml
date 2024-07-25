@@ -40,6 +40,28 @@ jobs:
         docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t crurutest --platform linux/amd64 .
         docker tag crurutest:latest ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
+        
+    - name: Extract secrets to .env file
+      run: |
+        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> backend/.env
+        echo DB_URL=${{ secrets.DB_URL }} >> backend/.env
+        echo DB_USER=${{ secrets.DB_USER }} >> backend/.env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> backend/.env
+        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> backend/.env
+        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> backend/.env
+
+    - name: Upload .env file
+      uses: actions/upload-artifact@v4
+      with:
+        name: env-file
+        path: backend/.env
+
+        
+    - name: Upload docker-compose
+      uses: actions/upload-artifact@v4
+      with:
+        name: docker-compose-yml
+        path: ${{ github.workspace }}/backend/docker-compose.yml
 
   deploy:
     runs-on: self-hosted
@@ -48,23 +70,23 @@ jobs:
       run:
         working-directory: backend
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Download docker-compose.yml
+      uses: actions/download-artifact@v4
+      with:
+        name: docker-compose.yml
+        path: ${{ github.workspace }}/backend/docker-compose.yml
 
-    - name: Create .env file
-      run: |
-        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> .env
-        echo DB_URL=${{ secrets.DB_URL }} >> .env
-        echo DB_USER=${{ secrets.DB_USER }} >> .env
-        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> .env
-        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> .env
+    - name: Download .env file
+      uses: actions/download-artifact@v4
+      with:
+        name: env-file
+        path: backend/.env
 
     - name: Build and push Docker image
       run: |
-        docker-compose --env-file .env -f docker-compose.yml build
-        docker-compose --env-file .env -f docker-compose.yml push
+        docker-compose --env-file backend/.env -f backend/docker-compose.yml build
+        docker-compose --env-file backend/.env -f backend/docker-compose.yml push
 
     - name: Deploy
       run: |
-        docker-compose --env-file .env -f docker-compose.yml up -d
+        docker-compose --env-file backend/.env -f backend/docker-compose.yml up -d
