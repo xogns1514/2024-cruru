@@ -40,15 +40,6 @@ jobs:
         docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t crurutest --platform linux/amd64 .
         docker tag crurutest:latest ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
-        
-    - name: Extract secrets to .env file
-      run: |
-        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> .env
-        echo DB_URL=${{ secrets.DB_URL }} >> .env
-        echo DB_USER=${{ secrets.DB_USER }} >> .env
-        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> .env
-        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> .env
 
   deploy:
     runs-on: self-hosted
@@ -59,6 +50,15 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Create .env file
+      run: |
+        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> .env
+        echo DB_URL=${{ secrets.DB_URL }} >> .env
+        echo DB_USER=${{ secrets.DB_USER }} >> .env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> .env
+        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> .env
 
     - name: Build and push Docker image
       run: |
