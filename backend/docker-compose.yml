@@ -1,61 +1,47 @@
-#version: '3.8'
-#
-#services:
-#  database-mysql:
-#    container_name: database-container
-#    image: mysql/mysql-server:latest
-#    environment:
-#      MYSQL_DATABASE: 'cruru'
-#      MYSQL_ROOT_HOST: '%'
-#      MYSQL_ROOT_PASSWORD: 'cruru'
-#      TZ: Asia/Seoul
-#    ports:
-#      - '13306:3306'
-#    command:
-#      - '--character-set-server=utf8mb4'
-#      - '--collation-server=utf8mb4_unicode_ci'
-#    networks:
-#      test_network:
-#        ipv4_address: 172.18.0.2@@
-#
-#
-#  application:
-#    container_name: app_container
-#    platform: linux/amd64
-#    depends_on:@@
-#      - database-mysql
-#    restart: always
-#    image: cruruTest/cruru:latest
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      DB_URL: jdbc:mysql://172.17.0.1:13306/cruru
-#      DB_USER: root
-#      DB_PASSWORD: cruru
-#      DDL_AUTO: update
-#      SERVER_PORT: 8081
-#    networks:
-#      test_network:
-#        ipv4_address: 172.18.0.3
-#
-#networks:
-#  test_network:
-#    driver: bridge
-#    ipam:
-#      config:
-#        - subnet: 172.18.0.0/16
 version: '3.8'
 
 services:
-  app:
-    image: myapp:latest
-    env_file:
-      - .env
+  database-mysql:
+    container_name: database-container
+    image: mysql/mysql-server:latest
     environment:
-      - SECRET_KEY
+      MYSQL_DATABASE: 'cruru'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      TZ: Asia/Seoul
+    ports:
+      - '13306:3306'
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+    networks:
+      test_network:
+        ipv4_address: 172.18.0.2
 
-###@####
-##asss
-#@@@
-#2
+
+  application:
+    container_name: app_container
+    platform: linux/amd64
+    depends_on:
+      - database-mysql
+    restart: always
+    image: cruruTest/cruru:latest
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DDL_AUTO: ${DDL_AUTO}
+      SERVER_PORT: ${SERVER_PORT}
+    networks:
+      test_network:
+        ipv4_address: 172.18.0.3
+
+networks:
+  test_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
 
