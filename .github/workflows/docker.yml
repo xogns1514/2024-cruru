@@ -43,12 +43,12 @@ jobs:
         
     - name: Extract secrets to .env file
       run: |
-        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> backend/.env
-        echo DB_URL=${{ secrets.DB_URL }} >> backend/.env
-        echo DB_USER=${{ secrets.DB_USER }} >> backend/.env
-        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> backend/.env
-        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> backend/.env
-        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> backend/.env
+        echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> ${{ github.workspace }}/backend/.env
+        echo DB_URL=${{ secrets.DB_URL }} >> ${{ github.workspace }}/backend/.env
+        echo DB_USER=${{ secrets.DB_USER }} >> ${{ github.workspace }}/backend/.env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> ${{ github.workspace }}/backend/.env
+        echo DDL_AUTO=${{ secrets.DDL_AUTO }} >> ${{ github.workspace }}/backend/.env
+        echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> ${{ github.workspace }}/backend/.env
 
     - name: Upload .env file
       uses: actions/upload-artifact@v4
@@ -80,7 +80,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: env-file
-        path: backend/.env
+        path: ${{ github.workspace }}/backend/.env
 
     - name: Build and push Docker image
       run: |
