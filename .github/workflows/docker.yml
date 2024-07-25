@@ -37,12 +37,12 @@ jobs:
         
     - name: Image build and push
       run: |
-        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t crurutest:latest --platform linux/amd64 .
+        docker build --build-arg PROFILE=dev --build-arg DEPENDENCY=build/dependency -t cruruTest/cruru --platform linux/amd64 .
 
     - name: Push Docker image
       run: |
-        docker tag crurutest:latest ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/crurutest:latest
+        docker tag cruruTest/cruru:latest ${{ secrets.DOCKER_USERNAME }}/cruruTest/cruru:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/cruruTest/cruru:latest
         
     - name: Extract secrets to .env file
       run: |
