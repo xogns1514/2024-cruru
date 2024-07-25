@@ -81,6 +81,10 @@ jobs:
       with:
         name: env-file
         path: ${{ github.workspace }}/backend
+        
+    - name: Stop and remove existing containers
+      run: |
+        docker-compose -f docker-compose.yml down 
 
     - name: Deploy
       run: |
