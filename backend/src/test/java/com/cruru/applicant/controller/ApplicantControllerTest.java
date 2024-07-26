@@ -186,7 +186,7 @@ class ApplicantControllerTest extends ControllerTest {
                 .then().log().all().statusCode(200);
     }
 
-    @DisplayName("존재하지 않는 지원자를 불합격시키길 시도하면 404를 응답한다.")
+    @DisplayName("존재하지 않는 지원자에 대해 불합격을 시도하면 404를 응답한다.")
     @Test
     void reject_applicantNotFound() {
         // given
@@ -201,7 +201,7 @@ class ApplicantControllerTest extends ControllerTest {
                 .then().log().all().statusCode(404);
     }
 
-    @DisplayName("이미 불합격한 지원자를 불합격시키길 시도하면 400을 응답한다.")
+    @DisplayName("이미 불합격한 지원자에 대해 불합격을 시도하면 400을 응답한다.")
     @Test
     void reject_alreadyRejected() {
         // given

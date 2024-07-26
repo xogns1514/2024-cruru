@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class ControllerTest {
 
     protected RequestSpecification spec;
+
     @LocalServerPort
     private int port;
 

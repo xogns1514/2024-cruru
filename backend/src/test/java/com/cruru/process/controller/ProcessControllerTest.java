@@ -80,7 +80,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/read/",
                         queryParameters(parameterWithName("dashboard_id").description("조회할 프로세스의 대시보드 id")),
                         responseFields(
@@ -101,7 +100,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/read-fail/dashboard-not-found/",
                         queryParameters(parameterWithName("dashboard_id").description("존재하지 않는 대시보드 id"))
                 ))
@@ -188,12 +186,13 @@ class ProcessControllerTest extends ControllerTest {
                 .body(processCreateRequest)
                 .filter(document("process/create-fail/process-count-overed/",
                         queryParameters(parameterWithName("dashboard_id").description("생성할 프로세스의 대시보드 id")),
-                        requestFields(PROCESS_FIELD_DESCRIPTORS)))
+                        requestFields(PROCESS_FIELD_DESCRIPTORS)
+                ))
                 .when().post(url)
                 .then().log().all().statusCode(400);
     }
 
-    @DisplayName("존재하는 프로세스의 이름과 설명 변경 성공시, 200을 응답한다.")
+    @DisplayName("존재하는 프로세스의 이름과 설명 변경 성공 시, 200을 응답한다.")
     @Test
     void update() {
         // given
@@ -248,7 +247,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/delete",
                         pathParameters(parameterWithName("process_id").description("삭제할 프로세스의 id"))
                 ))
@@ -264,7 +262,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/delete-fail/process-not-found",
                         pathParameters(parameterWithName("process_id").description("삭제할 프로세스의 id"))
                 ))
@@ -272,7 +269,7 @@ class ProcessControllerTest extends ControllerTest {
                 .then().log().all().statusCode(404);
     }
 
-    @DisplayName("처음 혹은 마지막 프로세스 삭제 시도 시, 400을 응답한다.")
+    @DisplayName("처음 또는 마지막 프로세스 삭제 시도 시, 400을 응답한다.")
     @Test
     void delete_endOrder() {
         // given
@@ -280,7 +277,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/delete-fail/process-order-first-or-last",
                         pathParameters(parameterWithName("process_id").description("삭제할 프로세스의 id"))
                 ))
@@ -297,7 +293,6 @@ class ProcessControllerTest extends ControllerTest {
 
         // when&then
         RestAssured.given(spec).log().all()
-
                 .filter(document("process/delete-fail/process-applicant-exist",
                         pathParameters(parameterWithName("process_id").description("삭제할 프로세스의 id"))
                 ))
