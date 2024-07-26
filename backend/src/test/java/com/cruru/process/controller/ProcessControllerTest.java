@@ -132,7 +132,7 @@ class ProcessControllerTest extends ControllerTest {
     void create_dashboardNotFound() {
         // given
         ProcessCreateRequest processCreateRequest = new ProcessCreateRequest("name", "description", 1);
-        Long invalidDashboardId = -1L;
+        long invalidDashboardId = -1;
         String url = String.format("/v1/processes?dashboard_id=%d", invalidDashboardId);
 
         // when&then
@@ -260,7 +260,7 @@ class ProcessControllerTest extends ControllerTest {
     @Test
     void delete_processNotFound() {
         // given
-        Long invalidId = -1L;
+        long invalidId = -1;
 
         // when&then
         RestAssured.given(spec).log().all()

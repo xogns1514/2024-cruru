@@ -79,7 +79,7 @@ class ApplicantControllerTest extends ControllerTest {
         Process now = processRepository.save(createFirstProcess());
         Applicant applicant = createApplicantDobby(now);
         applicantRepository.save(applicant);
-        Long invalidProcessId = -1L;
+        long invalidProcessId = -1;
 
         // when&then
         RestAssured.given(spec).log().all()
@@ -121,7 +121,7 @@ class ApplicantControllerTest extends ControllerTest {
     @Test
     void read_applicantNotFound() {
         // given
-        Long invalidApplicantId = -1L;
+        long invalidApplicantId = -1;
 
         // when&then
         RestAssured.given(spec).log().all()
@@ -160,7 +160,7 @@ class ApplicantControllerTest extends ControllerTest {
     @Test
     void readDetail_applicantNotFound() {
         // given
-        Long invalidApplicantId = -1L;
+        long invalidApplicantId = -1;
 
         // when&then
         RestAssured.given(spec).log().all()
@@ -190,7 +190,7 @@ class ApplicantControllerTest extends ControllerTest {
     @Test
     void reject_applicantNotFound() {
         // given
-        Long invalidApplicantId = -1L;
+        long invalidApplicantId = -1;
 
         // when&then
         RestAssured.given(spec).log().all()

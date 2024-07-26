@@ -55,7 +55,7 @@ class DashboardControllerTest extends ControllerTest {
     void read_clubNotFound() {
         // given
         DashboardCreateRequest request = new DashboardCreateRequest("dashboard name");
-        Long invalidClubId = -1L;
+        long invalidClubId = -1;
         String url = String.format("/v1/dashboards?club_id=%d", invalidClubId);
 
         // when&then

@@ -193,7 +193,7 @@ class EvaluationControllerTest extends ControllerTest {
     @Test
     void read_applicantNotFound() {
         // given
-        Long invalidApplicantId = -1L;
+        long invalidApplicantId = -1;
         String url = String.format("/v1/evaluations?process_id=%d&applicant_id=%d", process.getId(),
                 invalidApplicantId);
 
@@ -212,7 +212,7 @@ class EvaluationControllerTest extends ControllerTest {
     @Test
     void read_processNotFound() {
         // given
-        Long invalidProcessId = -1L;
+        long invalidProcessId = -1;
         String url = String.format("/v1/evaluations?process_id=%d&applicant_id=%d", invalidProcessId,
                 applicant.getId());
 

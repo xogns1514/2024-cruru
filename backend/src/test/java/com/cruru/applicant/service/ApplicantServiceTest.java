@@ -101,7 +101,7 @@ class ApplicantServiceTest extends ServiceTest {
     @Test
     void findById_notFound() {
         // given
-        long invalidId = -1L;
+        long invalidId = -1;
 
         // given&when&then
         assertThatThrownBy(() -> applicantService.findById(invalidId))
